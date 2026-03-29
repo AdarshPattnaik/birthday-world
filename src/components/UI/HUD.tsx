@@ -6,27 +6,7 @@ import { useGameStore } from '@/store/gameStore';
 export default function HUD() {
   const resetGame = useGameStore((s) => s.resetGame);
   const gameStarted = useGameStore((s) => s.gameStarted);
-  const [debugInfo, setDebugInfo] = useState('waiting...');
 
-  // Debug: poll controls + car state at 10fps
-  useEffect(() => {
-    if (!gameStarted) return;
-    const id = setInterval(() => {
-      const controls = useGameStore.getState().controls;
-      const carState = (window as any).__carState?.current;
-      const active = [
-        controls.forward && 'FWD',
-        controls.backward && 'REV',
-        controls.left && 'LEFT',
-        controls.right && 'RIGHT',
-      ].filter(Boolean).join(' ');
-      const pos = carState
-        ? `x:${carState.x?.toFixed(1)} z:${carState.z?.toFixed(1)} yaw:${carState.yaw?.toFixed(2)}`
-        : 'no car';
-      setDebugInfo(`Keys: [${active || 'none'}] | ${pos}`);
-    }, 100);
-    return () => clearInterval(id);
-  }, [gameStarted]);
 
   if (!gameStarted) return null;
 
@@ -37,25 +17,7 @@ export default function HUD() {
 
   return (
     <>
-      {/* Debug overlay */}
-      <div
-        style={{
-          position: 'fixed',
-          bottom: '60px',
-          left: '50%',
-          transform: 'translateX(-50%)',
-          zIndex: 300,
-          padding: '8px 16px',
-          background: 'rgba(0,0,0,0.7)',
-          borderRadius: '8px',
-          color: '#0f0',
-          fontSize: '13px',
-          fontFamily: 'monospace',
-          whiteSpace: 'nowrap',
-        }}
-      >
-        {debugInfo}
-      </div>
+
 
       {/* Reset button */}
       <button

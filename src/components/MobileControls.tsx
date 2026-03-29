@@ -49,38 +49,7 @@ export default function MobileControls() {
         pointerEvents: 'none',
       }}
     >
-      {/* Left side: steering */}
-      <div
-        style={{
-          display: 'flex',
-          gap: '12px',
-          alignItems: 'center',
-          pointerEvents: 'auto',
-        }}
-      >
-        <button
-          id="btn-left"
-          style={buttonStyle('#9b59b6')}
-          onPointerDown={() => handlePointerDown('left')}
-          onPointerUp={() => handlePointerUp('left')}
-          onPointerLeave={() => handlePointerUp('left')}
-          onContextMenu={(e) => e.preventDefault()}
-        >
-          ◀
-        </button>
-        <button
-          id="btn-right"
-          style={buttonStyle('#9b59b6')}
-          onPointerDown={() => handlePointerDown('right')}
-          onPointerUp={() => handlePointerUp('right')}
-          onPointerLeave={() => handlePointerUp('right')}
-          onContextMenu={(e) => e.preventDefault()}
-        >
-          ▶
-        </button>
-      </div>
-
-      {/* Right side: throttle */}
+      {/* Left side: throttle */}
       <div
         style={{
           display: 'flex',
@@ -109,6 +78,37 @@ export default function MobileControls() {
           onContextMenu={(e) => e.preventDefault()}
         >
           ▼
+        </button>
+      </div>
+
+      {/* Right side: steering */}
+      <div
+        style={{
+          display: 'flex',
+          gap: '12px',
+          alignItems: 'center',
+          pointerEvents: 'auto',
+        }}
+      >
+        <button
+          id="btn-left"
+          style={buttonStyle('#9b59b6')}
+          onPointerDown={() => handlePointerDown('left')}
+          onPointerUp={() => handlePointerUp('left')}
+          onPointerLeave={() => handlePointerUp('left')}
+          onContextMenu={(e) => e.preventDefault()}
+        >
+          ◀
+        </button>
+        <button
+          id="btn-right"
+          style={buttonStyle('#9b59b6')}
+          onPointerDown={() => handlePointerDown('right')}
+          onPointerUp={() => handlePointerUp('right')}
+          onPointerLeave={() => handlePointerUp('right')}
+          onContextMenu={(e) => e.preventDefault()}
+        >
+          ▶
         </button>
       </div>
     </div>
