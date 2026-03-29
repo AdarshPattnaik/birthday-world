@@ -5,7 +5,7 @@ import { useFrame } from '@react-three/fiber';
 import { useRef, useMemo } from 'react';
 import * as THREE from 'three';
 
-import { Text } from '@react-three/drei';
+import { Text, Instances, Instance } from '@react-three/drei';
 
 // -------------------------------------------------------------
 // Helper components for the Water Park area
@@ -183,6 +183,21 @@ export default function WaterPark() {
     return shape;
   }, [poolRadius]);
 
+  // Pre-calculate 32 highly performant glowing decorative lights for the pool border
+  const borderLightPositions = useMemo(() => {
+    const positions: [number, number, number][] = [];
+    const count = 32;
+    for (let i = 0; i < count; i++) {
+       const a = (i / count) * Math.PI * 2;
+       const x = Math.cos(a) * 36; // middle of the rim (radius 35 to 37)
+       const z = Math.sin(a) * 36;
+       // Ramps are at specific Z coordinates. Let's just place them slightly above the rim (y=0.45)
+       // Or even better, embed them slightly!
+       positions.push([x, 0.45, z]);
+    }
+    return positions;
+  }, []);
+
   return (
     <group position={wpCenter}>
       
@@ -258,6 +273,21 @@ export default function WaterPark() {
       <BeachBall position={[8, 1, 15]} />
       <BeachBall position={[-12, 1, -18]} />
       <BeachBall position={[-22, 1, 8]} />
+      
+      {/* 4. Decorative Border Lights for Nighttime */}
+      {/* We use Instances to render all 32 border glowing orbs as a single GPU draw call! */}
+      <Instances limit={borderLightPositions.length}>
+        <sphereGeometry args={[0.3, 12, 12]} />
+        <meshStandardMaterial 
+          color="#00e5ff" 
+          emissive="#00e5ff" 
+          emissiveIntensity={4} 
+          toneMapped={false} 
+        />
+        {borderLightPositions.map((pos, i) => (
+          <Instance key={`bl-${i}`} position={pos} />
+        ))}
+      </Instances>
       
     </group>
   );
