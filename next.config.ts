@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  serverExternalPackages: ['@dimforge/rapier3d-compat'],
+  turbopack: {},
 };
 
 export default nextConfig;
